@@ -1,38 +1,38 @@
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Delete, Get, Post, Put } from '@nestjs/common';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { Produto } from './produtos.model'
+import { ProdutosService } from './produtos.service';
 
 @Controller('produtos')
 export class ProdutosController {
-    produtos: Produto[] = [
-        new Produto("LIV01", "Livro 1 TESTE", 10),
-        new Produto("LIV02", "Livro 2 TESTE", 25.50),
-        new Produto("LIV03", "Livro 3 TESTE", 70),
-    ]
+    constructor(private produtosService: ProdutosService) {
+
+    }
     
   @Get()
   obterTodos(): Produto[] {
-    return this.produtos;
+    return this.produtosService.obterTodos();
   }
 
   @Get(':id')
-  obterUm(): Produto {
-      return this.produtos[0];
+  obterUm(@Param() params): Produto {
+      return this.produtosService.obterUm(params.id);
   }
 
   @Post()
   Criar(@Body() produto: Produto) {
-      produto.id = 100;
-      this.produtos.push(produto);
+      this.produtosService.criar(produto);
   }
 
   @Put()
   Alterar(@Body() produto: Produto): Produto {
-      return produto;
+      return this.produtosService.alterar(produto);
   }
 
   @Delete(':id')
-  apagar() {
-      this.produtos.pop();
+  apagar(@Param() params) {
+      this.produtosService.apagar(params.id);
   }
 }
