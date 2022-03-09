@@ -1,27 +1,28 @@
-// eslint-disable-next-line prettier/prettier
 import { Module } from '@nestjs/common';
-import { SequelizeModule } from '@nestjs/sequelize';
+import { ConfigModule } from '@nestjs/config/dist/config.module';
+import { SequelizeModule } from '@nestjs/sequelize/dist/sequelize.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ProdutosController } from './produtos.controller';
-import { Produto } from './produtos.model';
-import { ProdutosService } from './produtos.service';
+import { Livro } from './livro.model';
+import { LivrosController } from './livros.controller';
+import { LivrosService } from './livros.service';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     SequelizeModule.forRoot({
       dialect: 'mysql',
       host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: 'root',
-      database: 'produto',
+      port: 3307,
+      username: process.env.USUARIO_BANCO_DADOS,
+      password: process.env.SENHA_BANCO_DADOS,
+      database: 'livraria',
       autoLoadModels: true,
-      models: [],
+      synchronize: true,
     }),
-    SequelizeModule.forFeature([Produto]),
+    SequelizeModule.forFeature([Livro])
   ],
-  controllers: [AppController, ProdutosController],
-  providers: [AppService, ProdutosService],
+  controllers: [AppController, LivrosController],
+  providers: [AppService, LivrosService],
 })
 export class AppModule {}
