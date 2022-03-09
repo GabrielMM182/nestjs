@@ -7,9 +7,9 @@ import { Produto } from './produtos.model';
 @Injectable()
 export class ProdutosService {
     produtos: Produto[] = [
-        new Produto("LIV01", "Livro 1 TESTE", 10),
-        new Produto("LIV02", "Livro 2 TESTE", 25.50),
-        new Produto("LIV03", "Livro 3 TESTE", 70),
+        // new Produto("LIV01", "Livro 1 TESTE", 10),
+        // new Produto("LIV02", "Livro 2 TESTE", 25.50),
+        // new Produto("LIV03", "Livro 3 TESTE", 70),
     ];
 
     obterTodos(): Produto[] {
